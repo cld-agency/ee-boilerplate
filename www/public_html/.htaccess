@@ -1,0 +1,45 @@
+## DON'T BE TEMPTED to abuse this file for one-off 301-redirects. (Use something like Detour Pro instead).
+
+# switch on rewrite engine.
+RewriteEngine On
+RewriteBase /
+
+# Remove trailing slashes.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} ^(.+)/$
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+#add dubdubs
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteCond %{HTTP_HOST} !^www2\.
+RewriteCond %{HTTP_HOST} !^domainname(.*)\.dev
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+# Rewrite index.php into requests that are not physical files, directories, images, css or js
+RewriteCond $1 !\.(css|js|gif|jpe?g|png) [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php/$1 [L]
+
+## EXPIRES HEADERS for browser-based caching
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+
+# Your document html
+  ExpiresByType text/html "access plus 0 seconds"
+
+# Media: images, video, audio
+  ExpiresByType audio/ogg "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType video/mp4 "access plus 1 month"
+  ExpiresByType video/ogg "access plus 1 month"
+  ExpiresByType video/webm "access plus 1 month"
+  ExpiresByType application/x-icon "access plus 1 year"
+
+# CSS and JavaScript. Need to implement name-based changes on deployment to bust these properly
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType text/css "access plus 1 week"
+</IfModule>

@@ -1,0 +1,14 @@
+.DS_Store
+made/
+thumbs/
+_thumbs/
+*/expressionengine/cache/*
+static_cache
+public_html/images/*
+public_html/downloads/*
+sftp-config.json
+*sublime-*
+node_modules
+.sass-cache
+public_html/assets/css/*\.css\.map
+config/config.local.php

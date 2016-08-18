@@ -1,0 +1,13 @@
+{!-- ====================================
+HOME PAGE
+========================================= --}
+
+{exp:stash:cache context="{global:env}" bundle="home" replace="{global:stash_cache_replace}"}
+
+	{stash:embed name="view:{global:env}" file_name="view"}
+
+	{exp:stash:set}
+		{stash:content}Hi there{/stash:content}
+	{/exp:stash:set}
+
+{/exp:stash:cache}
