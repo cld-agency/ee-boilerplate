@@ -11,7 +11,6 @@ RewriteRule ^(.+)/$ /$1 [R=301,L]
 
 #add dubdubs
 RewriteCond %{HTTP_HOST} !^www\.
-RewriteCond %{HTTP_HOST} !^www2\.
 RewriteCond %{HTTP_HOST} !^domainname(.*)\.dev
 RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 
@@ -39,7 +38,7 @@ RewriteRule ^(.*)$ /index.php/$1 [L]
   ExpiresByType video/webm "access plus 1 month"
   ExpiresByType application/x-icon "access plus 1 year"
 
-# CSS and JavaScript. Need to implement name-based changes on deployment to bust these properly
-  ExpiresByType application/javascript "access plus 1 week"
-  ExpiresByType text/css "access plus 1 week"
+# CSS and JavaScript. Need to implement automatic file name revving before enabling these rules
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
 </IfModule>
