@@ -8,7 +8,7 @@
 	<title>{exp:stash:page-title}</title>
 	<meta name="description" content="{exp:stash:get name='meta-desc' default='' strip_tags='yes'}">
 	{if global:env != 'prod'}<meta name="robots" content="noindex,nofollow">{/if}
-	<link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="stylesheet" href="{path=assets/css/{exp:revved file='style.css'}}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{exp:stash:extra-head-data}
 </head>
@@ -40,7 +40,7 @@
 {!-- ============================================================================= --}
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="/assets/js/js.min.js"></script>
+	<script src="{path=assets/js/{exp:revved file='js.min.js'}}"></script>
 	{exp:stash:extra-foot-data}
 </body>
 </html>

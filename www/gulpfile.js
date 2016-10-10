@@ -25,6 +25,8 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
 var gutil = require('gulp-util');
+var rev = require('gulp-rev');
+var del = require('del');
 
 // ----------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
@@ -52,20 +54,27 @@ gulp.task('bs-reload', function () {
 // STYLES
 // --------------------------------------------
 
-gulp.task('styles', function(){
+gulp.task('styles',['del-revs-css'], function(){
 	gulp.src(srcFolder + '/sass/style.scss')
 		.pipe(sass({ outputStyle: 'compressed' }))
 		.on('error', function(err) { gutil.log('Line: ' + err.lineNumber + ' - ' + err.message); gutil.beep(); })
 		.pipe(autoprefixer())
+		.pipe(rev())
 		.pipe(gulp.dest(compiledFolder+'/css'))
-		.pipe(browserSync.reload({ stream: true }));
+		.pipe(browserSync.reload({ stream: true }))
+		.pipe(rev.manifest('rev-manifest.json',{merge:true}))
+		.pipe(gulp.dest(process.cwd()));
+});
+// clear any previous revved CSS files based on their name of style-*
+gulp.task('del-revs-css', function () {
+	return del([compiledFolder + '/css' + '/**/style-*']);
 });
 
 // --------------------------------------------
 // SCRIPTS
 // --------------------------------------------
 
-gulp.task('scripts', function(){
+gulp.task('scripts',['del-revs-js'], function(){
 	gulp.src(srcFolder + '/js/*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
@@ -73,8 +82,15 @@ gulp.task('scripts', function(){
 		.pipe(uglify())
 		.on('error', function(err) { gutil.log(err.message);gutil.beep(); })
 		.pipe(concat('js.min.js'))
+		.pipe(rev())
 		.pipe(gulp.dest(compiledFolder+'/js'))
-		.pipe(browserSync.reload({ stream: true }));
+		.pipe(browserSync.reload({ stream: true }))
+		.pipe(rev.manifest('rev-manifest.json',{merge:true}))
+		.pipe(gulp.dest(process.cwd()));
+});
+// clear any previous revved JS files based on their name of js-*
+gulp.task('del-revs-js', function () {
+	return del([compiledFolder + '/js' + '/**/js-*']);
 });
 
 // --------------------------------------------
