@@ -4,6 +4,10 @@
 RewriteEngine On
 RewriteBase /
 
+# Rewrite all apple touch icons to a single file and let them resize it.
+# https://gist.github.com/davidhund/332316f82440ef4377f3
+RewriteRule ^apple-touch-icon(.*).png$ apple-touch-icon.png [L]
+
 # Remove trailing slashes.
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} ^(.+)/$
@@ -24,20 +28,6 @@ RewriteRule ^(.*)$ /index.php/$1 [L]
 
 <IfModule mod_expires.c>
   ExpiresActive on
-
-# Your document html
-  ExpiresByType text/html "access plus 0 seconds"
-
-# Media: images, video, audio
-  ExpiresByType audio/ogg "access plus 1 month"
-  ExpiresByType image/gif "access plus 1 month"
-  ExpiresByType image/jpeg "access plus 1 month"
-  ExpiresByType image/png "access plus 1 month"
-  ExpiresByType video/mp4 "access plus 1 month"
-  ExpiresByType video/ogg "access plus 1 month"
-  ExpiresByType video/webm "access plus 1 month"
-  ExpiresByType application/x-icon "access plus 1 year"
-
 # CSS and JavaScript. Need to implement automatic file name revving before enabling these rules
   ExpiresByType application/javascript "access plus 1 year"
   ExpiresByType text/css "access plus 1 year"

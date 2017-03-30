@@ -17,7 +17,7 @@ To use this EE boilerplate:
 1. Run `npm install` to install Gulp & dependencies
 1. Run `gulp` to start working
 
-1. Install required ExpressionEngine add-ons Stash and Revved.
+1. Install required ExpressionEngine add-ons: Stash and Revved.
 
 -------------------------------------------
 
